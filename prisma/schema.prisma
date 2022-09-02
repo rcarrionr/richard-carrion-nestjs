@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+enum State {
+    Enable  @map("E")
+    Disable @map("D")
+    Archived @map("A")
+}
+
+enum Status {
+    Active @map("A")
+    Inactive @map("I")
+}
+
+model Organization {
+  id        BigInt  @id @default(autoincrement())
+  name      String  @db.String(50)
+  status    Status
+  tribes    Tribe[]
+}
+
+model Tribe {
+  id                BigInt          @id @default(autoincrement())
+  organization      Organization    @relation(fields: [organizationId], references: [id])
+  organizationId    BigInt
+  name              String          @db.String(50)
+  status            Boolean
+  repository        Repository[]
+}
+
+model Repository {
+  id            BigInt              @id @default(autoincrement())
+  tribe         Tribe               @relation(fields: [tribeId], references: [id])
+  tribeId       BigInt
+  name          String              @db.String(50)
+  state         State
+  createdAt     DateTime            @default(now())
+  status        Status
+  metrics       Metric?
+}
+
+model Metric {
+  id                BigInt      @id @default(autoincrement())
+  repository        Repository  @relation(fields: [repositoryId], references: [id])
+  repositoryId      BigInt      @unique
+  coverange         Float
+  bugs              Int
+  vulnerabilities   Int
+  hotspots          Int
+  codeSmells        Int
+}
