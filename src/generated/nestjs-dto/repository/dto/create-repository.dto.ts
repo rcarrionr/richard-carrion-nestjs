@@ -8,4 +8,5 @@ export class CreateRepositoryDto {
   state: State;
   @ApiProperty({ enum: Status })
   status: Status;
+  tribeId: bigint;
 }

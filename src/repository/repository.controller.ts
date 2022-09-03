@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { RepositoryService } from './repository.service';
-import { CreateRepositoryDto, UpdateRepositoryDto } from "../generated/nestjs-dto/repository/dto";
+import { Body, Controller, Get, Post } from "@nestjs/common";
+import { RepositoryService } from "./repository.service";
+import { CreateRepositoryDto } from "../generated/nestjs-dto/repository/dto";
 
-@Controller('repository')
+@Controller("repository")
 export class RepositoryController {
-  constructor(private readonly repositoryService: RepositoryService) {}
+  constructor(private readonly repositoryService: RepositoryService) {
+  }
 
   @Post()
   create(@Body() createRepositoryDto: CreateRepositoryDto) {
@@ -16,18 +17,4 @@ export class RepositoryController {
     return this.repositoryService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.repositoryService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRepositoryDto: UpdateRepositoryDto) {
-    return this.repositoryService.update(+id, updateRepositoryDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.repositoryService.remove(+id);
-  }
 }

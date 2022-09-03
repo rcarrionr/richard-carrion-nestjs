@@ -1,25 +1,50 @@
-import { Injectable } from '@nestjs/common';
-import { CreateRepositoryDto, UpdateRepositoryDto } from "../generated/nestjs-dto/repository/dto";
+import { Injectable } from "@nestjs/common";
+import { CreateRepositoryDto } from "../generated/nestjs-dto/repository/dto";
+import { PrismaService } from "../prisma/prisma.service";
+import { Prisma } from "@prisma/client";
+import { Repository } from "../generated/nestjs-dto/repository/entities";
 
 @Injectable()
 export class RepositoryService {
-  create(createRepositoryDto: CreateRepositoryDto) {
-    return 'This action adds a new repository';
+  constructor(private readonly prismaService: PrismaService) {
+  }
+
+  create(data: Prisma.RepositoryUncheckedCreateInput): Promise<CreateRepositoryDto> {
+    return this.prismaService.repository.create({
+      data: {
+        ...data,
+        tribeId: BigInt(data.tribeId)
+      }
+    });
   }
 
   findAll() {
-    return `This action returns all repository`;
+    return this.prismaService.repository.findMany({
+      select: {
+        id: true,
+        state: true
+      }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} repository`;
+  findOne(where: Prisma.RepositoryWhereUniqueInput): Promise<Repository> {
+    return this.prismaService.repository.findUnique({ where });
   }
 
-  update(id: number, updateRepositoryDto: UpdateRepositoryDto) {
-    return `This action updates a #${id} repository`;
+  update(params: {
+    where: Prisma.RepositoryWhereUniqueInput;
+    data: Prisma.RepositoryUpdateInput;
+  }): Promise<Repository> {
+    const { data, where } = params;
+    return this.prismaService.repository.update({
+      data,
+      where
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} repository`;
+  remove(where: Prisma.RepositoryWhereUniqueInput): Promise<Repository> {
+    return this.prismaService.repository.delete({
+      where
+    });
   }
 }

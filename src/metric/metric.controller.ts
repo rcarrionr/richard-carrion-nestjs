@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MetricService } from './metric.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { MetricService } from "./metric.service";
 import { CreateMetricDto, UpdateMetricDto } from "../generated/nestjs-dto/metric/dto";
 
-@Controller('metric')
+@Controller("metric")
 export class MetricController {
-  constructor(private readonly metricService: MetricService) {}
+  constructor(private readonly metricService: MetricService) {
+  }
 
   @Post()
   create(@Body() createMetricDto: CreateMetricDto) {
@@ -16,13 +17,18 @@ export class MetricController {
     return this.metricService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get(":id/metric-repository")
+  repositoryMetricsByTribe(@Param("id") id: string) {
+    return this.metricService.repositoryMetricsByTribe({ id: BigInt(id) });
+  }
+
+  @Get(":id")
+  findOne(@Param("id") id: string) {
     return this.metricService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMetricDto: UpdateMetricDto) {
+  @Patch(":id")
+  update(@Param("id") id: string, @Body() updateMetricDto: UpdateMetricDto) {
     return this.metricService.update(+id, updateMetricDto);
   }
 
@@ -30,4 +36,6 @@ export class MetricController {
   remove(@Param('id') id: string) {
     return this.metricService.remove(+id);
   }
+
+
 }
