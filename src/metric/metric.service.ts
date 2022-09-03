@@ -4,6 +4,8 @@ import { PrismaService } from "../prisma/prisma.service";
 import { endOfYear, startOfYear } from "date-fns";
 import { State } from "@prisma/client";
 
+const { Parser } = require("json2csv");
+
 
 @Injectable()
 export class MetricService {
@@ -80,5 +82,13 @@ export class MetricService {
       hotspots: e.metrics.hotspots,
       state: e.state
     }));
+  }
+
+  async repositoryMetricsByTribeExport(param: { id: bigint }) {
+    const data = await this.repositoryMetricsByTribe(param);
+    const json2csvParser = new Parser();
+    const csv: string = json2csvParser.parse(data);
+    return csv;
+
   }
 }

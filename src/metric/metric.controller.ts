@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Res } from "@nestjs/common";
 import { MetricService } from "./metric.service";
 import { CreateMetricDto, UpdateMetricDto } from "../generated/nestjs-dto/metric/dto";
+import { Response } from "express";
 
 @Controller("metric")
 export class MetricController {
@@ -20,6 +21,23 @@ export class MetricController {
   @Get(":id/metric-repository")
   repositoryMetricsByTribe(@Param("id") id: string) {
     return this.metricService.repositoryMetricsByTribe({ id: BigInt(id) });
+  }
+
+
+  @Get(":id/metric-repository/export")
+  async repositoryMetricsByTribeExport(
+    @Param("id") id: string,
+    @Res() res: Response
+  ) {
+    const csv = await this.metricService.repositoryMetricsByTribeExport({ id: BigInt(id) });
+
+    res.set({
+      "Content-Type": "text/csv",
+      "Content-Disposition": `attachment; filename="metricas-${id}.csv"`
+    });
+
+    res.send(csv);
+
   }
 
   @Get(":id")
