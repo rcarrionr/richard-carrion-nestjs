@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { TribeService } from './tribe.service';
-import { CreateTribeDto } from './dto/create-tribe.dto';
-import { UpdateTribeDto } from './dto/update-tribe.dto';
+import { CreateTribeDto, UpdateTribeDto } from "../generated/nestjs-dto/tribe/dto";
 
 @Controller('tribe')
 export class TribeController {

@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { OrganizationService } from './organization.service';
-import { CreateOrganizationDto } from './dto/create-organization.dto';
-import { UpdateOrganizationDto } from './dto/update-organization.dto';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { OrganizationService } from "./organization.service";
+import { CreateOrganizationDto, UpdateOrganizationDto } from "../generated/nestjs-dto/organization/dto";
 
 @Controller('organization')
 export class OrganizationController {

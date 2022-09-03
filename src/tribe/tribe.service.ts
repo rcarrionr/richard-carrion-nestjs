@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTribeDto } from './dto/create-tribe.dto';
-import { UpdateTribeDto } from './dto/update-tribe.dto';
+import { CreateTribeDto, UpdateTribeDto } from "../generated/nestjs-dto/tribe/dto";
 
 @Injectable()
 export class TribeService {

@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MetricService } from './metric.service';
-import { CreateMetricDto } from './dto/create-metric.dto';
-import { UpdateMetricDto } from './dto/update-metric.dto';
+import { CreateMetricDto, UpdateMetricDto } from "../generated/nestjs-dto/metric/dto";
 
 @Controller('metric')
 export class MetricController {
