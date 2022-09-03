@@ -1,10 +1,10 @@
 import { Status } from "@prisma/client";
-import { Tribe } from "../../tribe/entities/tribe.entity";
+import { ApiProperty } from "@nestjs/swagger";
 
 
 export class Organization {
   id: bigint;
   name: string;
+  @ApiProperty({ enum: Status })
   status: Status;
-  tribes?: Tribe[];
 }

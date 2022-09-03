@@ -1,25 +1,43 @@
-import { Injectable } from '@nestjs/common';
-import { CreateOrganizationDto, UpdateOrganizationDto } from "../generated/nestjs-dto/organization/dto";
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service";
+import { Organization } from "../generated/nestjs-dto/organization/entities";
+import { Prisma } from "@prisma/client";
 
 @Injectable()
 export class OrganizationService {
-  create(createOrganizationDto: CreateOrganizationDto) {
-    return 'This action adds a new organization';
+
+  constructor(private readonly prismaService: PrismaService) {
   }
 
-  findAll() {
-    return `This action returns all organization`;
+  create(data: Prisma.OrganizationCreateInput): Promise<Organization> {
+    return this.prismaService.organization.create({
+      data
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} organization`;
+  async findAll(): Promise<Organization[]> {
+    return this.prismaService.organization.findMany();
   }
 
-  update(id: number, updateOrganizationDto: UpdateOrganizationDto) {
-    return `This action updates a #${id} organization`;
+  async findOne(where: Prisma.OrganizationWhereUniqueInput): Promise<Organization> {
+    return await this.prismaService.organization.findUnique({ where });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} organization`;
+  async update(params: {
+    where: Prisma.OrganizationWhereUniqueInput;
+    data: Prisma.OrganizationUpdateInput;
+  }): Promise<Organization> {
+    const { data, where } = params;
+    return this.prismaService.organization.update({
+      data,
+      where
+    });
+
+  }
+
+  async remove(where: Prisma.OrganizationWhereUniqueInput): Promise<Organization> {
+    return this.prismaService.organization.delete({
+      where
+    });
   }
 }
