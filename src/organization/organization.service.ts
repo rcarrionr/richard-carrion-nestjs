@@ -15,15 +15,15 @@ export class OrganizationService {
     });
   }
 
-  async findAll(): Promise<Organization[]> {
+  findAll(): Promise<Organization[]> {
     return this.prismaService.organization.findMany();
   }
 
-  async findOne(where: Prisma.OrganizationWhereUniqueInput): Promise<Organization> {
-    return await this.prismaService.organization.findUnique({ where });
+  findOne(where: Prisma.OrganizationWhereUniqueInput): Promise<Organization> {
+    return this.prismaService.organization.findUnique({ where });
   }
 
-  async update(params: {
+  update(params: {
     where: Prisma.OrganizationWhereUniqueInput;
     data: Prisma.OrganizationUpdateInput;
   }): Promise<Organization> {
@@ -32,10 +32,9 @@ export class OrganizationService {
       data,
       where
     });
-
   }
 
-  async remove(where: Prisma.OrganizationWhereUniqueInput): Promise<Organization> {
+  remove(where: Prisma.OrganizationWhereUniqueInput): Promise<Organization> {
     return this.prismaService.organization.delete({
       where
     });

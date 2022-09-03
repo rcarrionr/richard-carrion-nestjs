@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { TribeService } from './tribe.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { TribeService } from "./tribe.service";
 import { CreateTribeDto, UpdateTribeDto } from "../generated/nestjs-dto/tribe/dto";
 
-@Controller('tribe')
+@Controller("tribe")
 export class TribeController {
-  constructor(private readonly tribeService: TribeService) {}
+  constructor(private readonly tribeService: TribeService) {
+  }
 
   @Post()
   create(@Body() createTribeDto: CreateTribeDto) {
@@ -18,16 +19,16 @@ export class TribeController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.tribeService.findOne(+id);
+    return this.tribeService.findOne({ id: BigInt(id) });
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTribeDto: UpdateTribeDto) {
-    return this.tribeService.update(+id, updateTribeDto);
+    return this.tribeService.update({ where: { id: BigInt(id) }, data: updateTribeDto });
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.tribeService.remove(+id);
+    return this.tribeService.remove({ id: BigInt(id) });
   }
 }
