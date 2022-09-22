@@ -1,11 +1,11 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
-import { RepositoryService } from "./repository.service";
-import { CreateRepositoryDto } from "../generated/nestjs-dto/repository/dto";
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { RepositoryService } from './repository.service';
+import { Prisma } from '@prisma/client';
+import { CreateRepositoryDto } from '../generated/nestjs-dto/repository/dto';
 
-@Controller("repository")
+@Controller('repository')
 export class RepositoryController {
-  constructor(private readonly repositoryService: RepositoryService) {
-  }
+  constructor(private readonly repositoryService: RepositoryService) {}
 
   @Post()
   create(@Body() createRepositoryDto: CreateRepositoryDto) {
@@ -16,5 +16,4 @@ export class RepositoryController {
   findAll() {
     return this.repositoryService.findAll();
   }
-
 }

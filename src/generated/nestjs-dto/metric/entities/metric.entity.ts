@@ -1,5 +1,4 @@
-import { Repository } from "../../repository/entities/repository.entity";
-
+import { Repository } from '../../repository/entities/repository.entity';
 
 export class Metric {
   id: bigint;

@@ -1,17 +1,15 @@
-import { Injectable } from "@nestjs/common";
-import { PrismaService } from "../prisma/prisma.service";
-import { Organization } from "../generated/nestjs-dto/organization/entities";
-import { Prisma } from "@prisma/client";
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { Organization } from '../generated/nestjs-dto/organization/entities';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class OrganizationService {
-
-  constructor(private readonly prismaService: PrismaService) {
-  }
+  constructor(private readonly prismaService: PrismaService) {}
 
   create(data: Prisma.OrganizationCreateInput): Promise<Organization> {
     return this.prismaService.organization.create({
-      data
+      data,
     });
   }
 
@@ -30,13 +28,13 @@ export class OrganizationService {
     const { data, where } = params;
     return this.prismaService.organization.update({
       data,
-      where
+      where,
     });
   }
 
   remove(where: Prisma.OrganizationWhereUniqueInput): Promise<Organization> {
     return this.prismaService.organization.delete({
-      where
+      where,
     });
   }
 }

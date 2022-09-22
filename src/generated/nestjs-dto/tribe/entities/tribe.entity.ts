@@ -1,5 +1,5 @@
-import { Organization } from "../../organization/entities/organization.entity";
-
+import { Organization } from '../../organization/entities/organization.entity';
+import { Repository } from '../../repository/entities/repository.entity';
 
 export class Tribe {
   id: bigint;
@@ -7,4 +7,5 @@ export class Tribe {
   organizationId: bigint;
   name: string;
   status: boolean;
+  repository?: Repository[];
 }

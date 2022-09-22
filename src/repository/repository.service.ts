@@ -1,20 +1,21 @@
-import { Injectable } from "@nestjs/common";
-import { CreateRepositoryDto } from "../generated/nestjs-dto/repository/dto";
-import { PrismaService } from "../prisma/prisma.service";
-import { Prisma } from "@prisma/client";
-import { Repository } from "../generated/nestjs-dto/repository/entities";
+import { Injectable } from '@nestjs/common';
+import { CreateRepositoryDto } from '../generated/nestjs-dto/repository/dto';
+import { PrismaService } from '../prisma/prisma.service';
+import { Prisma } from '@prisma/client';
+import { Repository } from '../generated/nestjs-dto/repository/entities';
 
 @Injectable()
 export class RepositoryService {
-  constructor(private readonly prismaService: PrismaService) {
-  }
+  constructor(private readonly prismaService: PrismaService) {}
 
-  create(data: Prisma.RepositoryUncheckedCreateInput): Promise<CreateRepositoryDto> {
+  create(
+    data: CreateRepositoryDto, //Prisma.RepositoryUncheckedCreateInput,
+  ): Promise<CreateRepositoryDto> {
     return this.prismaService.repository.create({
       data: {
         ...data,
-        tribeId: BigInt(data.tribeId)
-      }
+        tribeId: BigInt(data.tribeId),
+      } as Prisma.RepositoryUncheckedCreateInput,
     });
   }
 
@@ -22,8 +23,8 @@ export class RepositoryService {
     return this.prismaService.repository.findMany({
       select: {
         id: true,
-        state: true
-      }
+        state: true,
+      },
     });
   }
 
@@ -38,13 +39,13 @@ export class RepositoryService {
     const { data, where } = params;
     return this.prismaService.repository.update({
       data,
-      where
+      where,
     });
   }
 
   remove(where: Prisma.RepositoryWhereUniqueInput): Promise<Repository> {
     return this.prismaService.repository.delete({
-      where
+      where,
     });
   }
 }

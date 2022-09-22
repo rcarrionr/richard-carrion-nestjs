@@ -1,6 +1,5 @@
-import { State, Status } from "@prisma/client";
-import { ApiProperty } from "@nestjs/swagger";
-
+import { State, Status } from '@prisma/client';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateRepositoryDto {
   name: string;
